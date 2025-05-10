@@ -21,8 +21,29 @@ L = @(x,u,w) L_fce(x,u,w,rp,rt);
 %%
  [V, gamma, g] = Bellman(N,f,U,L,eta,lambda, 1, 0); 
 
-%%
+%% vykresleni
+load('data/BellmanIter_136.mat')
 
+
+
+figure
+plot(g(:,:,1))
+xlabel('$i$','Interpreter','latex')
+ylabel('$g^{(i)}$','Interpreter','latex')
+title('$g^{(i)} = \vert \vert V^{(i+1)} - V^{(i)} \vert \vert_{\infty}$','Interpreter','latex')
+set(gcf,'color','w');
+grid minor
+box on
+
+figure
+semilogy(g(:,:,1))
+xlabel('$i$','Interpreter','latex')
+ylabel('$g^{(i)}$','Interpreter','latex')
+title('$g^{(i)} = \vert \vert V^{(i+1)} - V^{(i)} \vert \vert_{\infty}$','Interpreter','latex')
+set(gcf,'color','w');
+grid minor
+box on
+%%
 
 function y = f_fce(x, u, w, N)
     y = max([0;0], min(N, x+[-1;1]*u+[-1 1 0 0; 0 0 -1 1]*w));
