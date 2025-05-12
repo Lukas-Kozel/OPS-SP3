@@ -33,6 +33,7 @@ title('$g^{(i)} = \vert \vert V^{(i+1)} - V^{(i)} \vert \vert_{\infty}$','Interp
 set(gcf,'color','w');
 grid minor
 box on
+saveit(1,'g_normal')
 
 figure %g = ||V^i+1 - V^i||inf, log scale
 semilogy(g(:,:,1))
@@ -42,6 +43,7 @@ title('$g^{(i)} = \vert \vert V^{(i+1)} - V^{(i)} \vert \vert_{\infty}$','Interp
 set(gcf,'color','w');
 grid minor
 box on
+saveit(1,'g_log')
 
 figure %V dle stavu
 X1 = 0:N(1);
@@ -106,6 +108,8 @@ end
 mean(J)
 V_optimal(x0(1)+1, x0(2)+1)
 
+max_error = max(V_optimal(x0(1)+1,x0(2)+1)-J)
+
 figure
 hold on
 plot(J,'.')
@@ -117,6 +121,51 @@ title('Monte Carlo simulace','Interpreter','latex')
 set(gcf,'color','w');
 box on
 saveit(1, 'Monty')
+
+%% Poiss
+close all
+x = 0:10;
+y1 = poisspdf(x,lambda(1));
+y2 = poisspdf(x,lambda(2));
+y3 = poisspdf(x,lambda(3));
+y4 = poisspdf(x,lambda(4));
+
+iy1 = poisscdf(x,lambda(1));
+iy2 = poisscdf(x,lambda(2));
+iy3 = poisscdf(x,lambda(3));
+iy4 = poisscdf(x,lambda(4));
+
+figure
+bar(x+0.125, y1, 0.25)
+hold on
+bar(x-0.125, y3, 0.25)
+title('Pujcení')
+legend('zákazníci na prvním parkovišti','zákazníci na druhém parkovišti')
+saveit(1, 'pucjky')
+
+figure
+bar(x+0.125, y2, 0.25)
+hold on
+bar(x-0.125, y4, 0.25)
+title('Vrácení')
+legend('zákazníci na prvním parkovišti','zákazníci na druhém parkovišti')
+saveit(1, 'vratky')
+
+figure
+stairs(x, iy1)
+hold on
+stairs(x, iy3)
+title('Pujcení')
+legend('zákazníci na prvním parkovišti','zákazníci na druhém parkovišti','Location','southeast')
+saveit(1, 'intpucjky')
+
+figure
+stairs(x, iy2)
+hold on
+stairs(x, iy4)
+title('Vrácení')
+legend('zákazníci na prvním parkovišti','zákazníci na druhém parkovišti','Location','southeast')
+saveit(1, 'intvratky')
 %%
 
 %funkce od GPT pro hezkou colormapu
